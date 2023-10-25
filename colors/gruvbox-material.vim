@@ -616,7 +616,7 @@ highlight! link TSString Aqua
 highlight! link TSStringEscape Green
 highlight! link TSStringRegex Green
 highlight! link TSStringSpecial SpecialChar
-highlight! link TSSymbol Fg
+highlight! link TSSymbol Purple
 highlight! link TSTag Orange
 highlight! link TSTagAttribute Green
 highlight! link TSTagDelimiter Green
@@ -631,6 +631,8 @@ highlight! link TSTypeQualifier Orange
 highlight! link TSURI markdownUrl
 highlight! link TSVariable Fg
 highlight! link TSVariableBuiltin PurpleItalic
+highlight! link TSConstBuiltin Red
+
 if has('nvim-0.8.0')
   highlight! link @annotation TSAnnotation
   highlight! link @attribute TSAttribute
@@ -2616,6 +2618,7 @@ highlight! link rubyModuleName Purple
 highlight! link rubyAccess Orange
 highlight! link rubyAttribute Yellow
 highlight! link rubyMacro RedItalic
+highlight! link @lsp.type.parameter.ruby Blue
 " }}}
 " syn_end }}}
 " syn_begin: haskell {{{
