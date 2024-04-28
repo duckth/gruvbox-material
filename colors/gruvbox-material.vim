@@ -10,7 +10,7 @@
 let s:configuration = gruvbox_material#get_configuration()
 let s:palette = gruvbox_material#get_palette(s:configuration.background, s:configuration.foreground, s:configuration.colors_override)
 let s:path = expand('<sfile>:p') " the path of this script
-let s:last_modified = 'Sat Feb 10 11:04:09 AM UTC 2024'
+let s:last_modified = 'Tue Mar 26 09:49:17 PM UTC 2024'
 let g:gruvbox_material_loaded_file_types = []
 
 if !(exists('g:colors_name') && g:colors_name ==# 'gruvbox-material' && s:configuration.better_performance)
@@ -355,7 +355,11 @@ call gruvbox_material#highlight('Character', s:palette.green, s:palette.none)
 call gruvbox_material#highlight('Constant', s:palette.aqua, s:palette.none)
 call gruvbox_material#highlight('Macro', s:palette.aqua, s:palette.none)
 call gruvbox_material#highlight('Identifier', s:palette.blue, s:palette.none)
-call gruvbox_material#highlight('Todo', s:palette.bg0, s:palette.blue, 'bold')
+if has('nvim')
+  call gruvbox_material#highlight('Todo', s:palette.bg0, s:palette.blue, 'bold')
+else
+  call gruvbox_material#highlight('Todo', s:palette.blue, s:palette.bg0, 'reverse,bold')
+endif
 if s:configuration.disable_italic_comment
   call gruvbox_material#highlight('Comment', s:palette.grey1, s:palette.none)
   call gruvbox_material#highlight('SpecialComment', s:palette.grey1, s:palette.none)
@@ -628,7 +632,7 @@ highlight! link TSType YellowItalic
 highlight! link TSTypeBuiltin YellowItalic
 highlight! link TSTypeDefinition YellowItalic
 highlight! link TSTypeQualifier Orange
-highlight! link TSURI markdownUrl
+call gruvbox_material#highlight('TSURI', s:palette.blue, s:palette.none, 'underline')
 highlight! link TSVariable Fg
 highlight! link TSVariableBuiltin PurpleItalic
 highlight! link TSConstBuiltin Red
@@ -1785,10 +1789,10 @@ call gruvbox_material#highlight('markdownH3', s:palette.yellow, s:palette.none, 
 call gruvbox_material#highlight('markdownH4', s:palette.green, s:palette.none, 'bold')
 call gruvbox_material#highlight('markdownH5', s:palette.blue, s:palette.none, 'bold')
 call gruvbox_material#highlight('markdownH6', s:palette.purple, s:palette.none, 'bold')
-call gruvbox_material#highlight('markdownUrl', s:palette.blue, s:palette.none, 'underline')
 call gruvbox_material#highlight('markdownItalic', s:palette.none, s:palette.none, 'italic')
 call gruvbox_material#highlight('markdownBold', s:palette.none, s:palette.none, 'bold')
 call gruvbox_material#highlight('markdownItalicDelimiter', s:palette.grey1, s:palette.none, 'italic')
+highlight! link markdownUrl TSURI
 highlight! link markdownCode Green
 highlight! link markdownCodeBlock Aqua
 highlight! link markdownCodeDelimiter Aqua
@@ -1821,7 +1825,7 @@ highlight! link mkdDelimiter Grey
 highlight! link mkdId Yellow
 " }}}
 " nvim-treesitter/nvim-treesitter {{{
-if has('nvim-0.8.0')
+if has('nvim-0.8')
   highlight! link @markup.heading.1.markdown markdownH1
   highlight! link @markup.heading.2.markdown markdownH2
   highlight! link @markup.heading.3.markdown markdownH3
@@ -1834,6 +1838,10 @@ if has('nvim-0.8.0')
   highlight! link @markup.heading.4.marker.markdown @conceal
   highlight! link @markup.heading.5.marker.markdown @conceal
   highlight! link @markup.heading.6.marker.markdown @conceal
+  if !has('nvim-0.10')
+    call gruvbox_material#highlight('@markup.italic', s:palette.none, s:palette.none, 'italic')
+    call gruvbox_material#highlight('@markup.strikethrough', s:palette.none, s:palette.none, 'strikethrough')
+  endif
 endif
 " }}}
 " syn_end }}}
@@ -1877,6 +1885,7 @@ highlight! link texBeginEnd Red
 highlight! link texBeginEndName Blue
 highlight! link texDocType Purple
 highlight! link texDocTypeArgs Orange
+highlight! link texDelimiter Conceal
 " }}}
 " vimtex: https://github.com/lervag/vimtex {{{
 highlight! link texCmd Green
