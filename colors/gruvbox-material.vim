@@ -2827,6 +2827,7 @@ highlight! link rubyAccess Orange
 highlight! link rubyAttribute Yellow
 highlight! link rubyMacro RedItalic
 highlight! link @lsp.type.parameter.ruby Blue
+highlight! link @variable.parameter.ruby Blue
 " }}}
 " syn_end }}}
 " syn_begin: haskell {{{
