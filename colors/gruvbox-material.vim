@@ -653,8 +653,8 @@ highlight! link TSNamespace YellowItalic
 highlight! link TSNone Fg
 highlight! link TSNumber Purple
 highlight! link TSOperator Orange
-highlight! link TSParameter Fg
-highlight! link TSParameterReference Fg
+highlight! link TSParameter Blue
+highlight! link TSParameterReference Blue
 highlight! link TSPreProc PreProc
 highlight! link TSProperty Blue
 highlight! link TSPunctBracket Fg
