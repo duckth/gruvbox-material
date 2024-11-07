@@ -10,7 +10,7 @@
 let s:configuration = gruvbox_material#get_configuration()
 let s:palette = gruvbox_material#get_palette(s:configuration.background, s:configuration.foreground, s:configuration.colors_override)
 let s:path = expand('<sfile>:p') " the path of this script
-let s:last_modified = 'Sat Jul 13 15:32:35 UTC 2024'
+let s:last_modified = 'Mon Sep 30 10:06:08 UTC 2024'
 let g:gruvbox_material_loaded_file_types = []
 
 if !(exists('g:colors_name') && g:colors_name ==# 'gruvbox-material' && s:configuration.better_performance)
@@ -72,8 +72,13 @@ else
     endif
   endif
 endif
-call gruvbox_material#highlight('IncSearch', s:palette.bg0, s:palette.bg_red)
-call gruvbox_material#highlight('Search', s:palette.bg0, s:palette.bg_green)
+if has('nvim')
+  call gruvbox_material#highlight('IncSearch', s:palette.bg0, s:palette.bg_red)
+  call gruvbox_material#highlight('Search', s:palette.bg0, s:palette.bg_green)
+else
+  call gruvbox_material#highlight('IncSearch', s:palette.bg_red, s:palette.bg0, 'reverse')
+  call gruvbox_material#highlight('Search', s:palette.bg_green, s:palette.bg0, 'reverse')
+endif
 highlight! link CurSearch IncSearch
 call gruvbox_material#highlight('ColorColumn', s:palette.none, s:palette.bg2)
 if s:configuration.ui_contrast ==# 'low'
@@ -108,7 +113,11 @@ endif
 call gruvbox_material#highlight('DiffAdd', s:palette.none, s:palette.bg_diff_green)
 call gruvbox_material#highlight('DiffChange', s:palette.none, s:palette.bg_diff_blue)
 call gruvbox_material#highlight('DiffDelete', s:palette.none, s:palette.bg_diff_red)
-call gruvbox_material#highlight('DiffText', s:palette.bg0, s:palette.blue)
+if has('nvim')
+  call gruvbox_material#highlight('DiffText', s:palette.bg0, s:palette.blue)
+else
+  call gruvbox_material#highlight('DiffText', s:palette.blue, s:palette.bg0, 'reverse')
+endif
 call gruvbox_material#highlight('Directory', s:palette.green, s:palette.none)
 call gruvbox_material#highlight('ErrorMsg', s:palette.red, s:palette.none, 'bold,underline')
 if s:configuration.ui_contrast ==# 'low'
@@ -517,6 +526,8 @@ if &diff
   call gruvbox_material#highlight('CurrentWord', s:palette.bg0, s:palette.bg_green)
 elseif s:configuration.current_word ==# 'grey background'
   call gruvbox_material#highlight('CurrentWord', s:palette.none, s:palette.bg_current_word)
+elseif s:configuration.current_word ==# 'high contrast background'
+  call gruvbox_material#highlight('CurrentWord', s:palette.none, s:palette.bg4)
 else
   call gruvbox_material#highlight('CurrentWord', s:palette.none, s:palette.none, s:configuration.current_word)
 endif
@@ -1823,6 +1834,9 @@ highlight! link NeoTreeIndentMarker NonText
 highlight! link NeoTreeNormalNC NeoTreeNormal
 highlight! link NeoTreeSignColumn NeoTreeNormal
 highlight! link NeoTreeRootName Title
+if &background ==# 'light'
+  call gruvbox_material#highlight('NeoTreeCursorLine', s:palette.none, s:palette.bg0)
+endif
 " syn_end }}}
 " syn_begin: octo {{{
 " https://github.com/pwntester/octo.nvim
@@ -2512,6 +2526,8 @@ highlight! link typescriptMathStaticProp Aqua
 highlight! link tsxTSConstructor TSType
 if has('nvim-0.8')
   highlight! link @constructor.tsx tsxTSConstructor
+  highlight! link @punctuation.special.typescript TSOperator
+  highlight! link @punctuation.special.tsx TSOperator
 endif
 if has('nvim-0.9')
   highlight! link @lsp.typemod.variable.defaultLibrary.typescript TSConstBuiltin
@@ -2976,7 +2992,7 @@ highlight! link shVariable Blue
 highlight! link shVarAssign Orange
 highlight! link shCmdSubRegion Green
 highlight! link shCommandSub Orange
-highlight! link shFunctionOne GreenBold
+highlight! link shFunction GreenBold
 highlight! link shFunctionKey RedItalic
 " }}}
 " syn_end }}}
