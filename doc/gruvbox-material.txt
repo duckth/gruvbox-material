@@ -308,7 +308,12 @@ See |gruvbox-material-faq| for more information.
                                                      *g:gruvbox_material_cursor*
 g:gruvbox_material_cursor~
 
-Customize the cursor color, only works in GUI clients.
+Customize the cursor color.
+
+Requires setting the |guicursor| option as in the examples from the Vim doc for
+the cursor to be styled according to |hl-Cursor|.
+
+Only works in GUI clients and compatible terminal emulators.
 
     Type:               |String|
     Available values:   `'auto'`, `'red'`, `'orange'`, `'yellow'`, `'green'`,
@@ -413,16 +418,22 @@ Whether to show |hl-EndOfBuffer|.
                                                 *g:gruvbox_material_float_style*
 g:gruvbox_material_float_style~
 
-Style used to make floating windows stand out from other windows. `'bright'`
-makes the background of these windows lighter than |hl-Normal|, whereas
-`'dim'` makes it darker.
+Style used to make Neovim's floating windows stand out from other windows.
+`'bright'` makes the background of these windows lighter than |hl-Normal|,
+whereas `'dim'` makes it darker.
+
+The special value `'none'` causes floating windows to be displayed with the
+same background as normal windows. Only use this style if Neovim is configured
+with a non-empty |'winborder'|, otherwise floating windows will visually blend
+into the main buffer. Plugins which create floating windows without border by
+default may also need to be configured individually.
 
 Floating windows include for instance diagnostic pop-ups, scrollable
 documentation windows from completion engines, overlay windows from
 installers, etc.
 
     Type:               |String|
-    Available values:   `'bright'`, `'dim'`
+    Available values:   `'bright'`, `'dim'`, `'none'`
     Default value:      `'bright'`
 
 ------------------------------------------------------------------------------
@@ -572,11 +583,17 @@ Note: this configuration option doesn't need to be placed before `colorscheme gr
                                          *g:gruvbox_material_better_performance*
 g:gruvbox_material_better_performance~
 
-The loading time of this color scheme is very long because too many file types
-and plugins are optimized. This feature allows you to load part of the code on
-demand by placing them in the `after/syntax` directory.
+The loading time of this color scheme might be long because too many file
+types and plugins are optimized. This option allows you to load part of the
+code on demand by placing them in the `after/syntax` directory.
 
-Enabling this option will reduce loading time by approximately 50%.
+Enabling this option will reduce loading time by approximately 50%, but in
+most cases it will only reduce tens of milliseconds, which you may not be very
+aware of it.
+
+This option can be particularly useful on low-performance machines, such as
+the Raspberry Pi, where it may be possible to reduce loading time by hundreds
+of milliseconds.
 
     Type:               |Number|
     Available values:   `0`, `1`
